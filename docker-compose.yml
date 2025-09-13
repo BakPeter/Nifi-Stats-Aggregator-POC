@@ -1,0 +1,37 @@
+version: '3.4'
+
+services:
+  nifi:
+    image: 'apache/nifi:latest'
+    restart: on-failure
+    environment:
+      - SINGLE_USER_CREDENTIALS_USERNAME=adminuser
+      - SINGLE_USER_CREDENTIALS_PASSWORD=ctsBtRBKHRAx69EqUghvvgEvjnaLjFEB
+      - NIFI_VARIABLE_REGISTRY_PROPERTIES=./custom-properties/props2.properties
+      - NIFI_WEB_HTTPS_PORT=8443
+      - NIFI_WEB_HTTP_PORT=8080
+    ports:
+      - 8443:8443
+      - 8080:8080
+      - 8090:8090
+    volumes:
+      - ${ROOT_FOLDER}\${PROJECT_NAME}\database_repository:/opt/nifi/nifi-current/database_repository
+      - ${ROOT_FOLDER}\${PROJECT_NAME}\flowfile_repository:/opt/nifi/nifi-current/flowfile_repository
+      - ${ROOT_FOLDER}\${PROJECT_NAME}\content_repository:/opt/nifi/nifi-current/content_repository
+      - ${ROOT_FOLDER}\${PROJECT_NAME}\provenance_repository:/opt/nifi/nifi-current/provenance_repository
+      - ${ROOT_FOLDER}\${PROJECT_NAME}\state:/opt/nifi/nifi-current/state
+      - ${ROOT_FOLDER}\${PROJECT_NAME}\logs:/opt/nifi/nifi-current/logs
+      # uncomment the next line after copying the /conf directory from the container to your local directory to persist NiFi flows
+      # run command in bind mount folder: docker cp <container-name>:/opt/nifi/nifi-current/conf ${ROOT_FOLDER}\${PROJECT_NAME}\conf
+      - ${ROOT_FOLDER}\${PROJECT_NAME}\conf:/opt/nifi/nifi-current/conf
+      # folder for user source
+      - ${ROOT_FOLDER}\${PROJECT_NAME}\_source:/opt/nifi/nifi-current/source
+      # folder for user target
+      - ${ROOT_FOLDER}\${PROJECT_NAME}\_target:/opt/nifi/nifi-current/target
+      # folder for temp data
+      - ${ROOT_FOLDER}\${PROJECT_NAME}\_temp-data:/opt/nifi/nifi-current/temp-data
+    networks:
+      - main
+
+networks:
+  main:
