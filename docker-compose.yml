@@ -23,7 +23,7 @@ services:
       - ${ROOT_FOLDER}\${PROJECT_NAME}\logs:/opt/nifi/nifi-current/logs
       # uncomment the next line after copying the /conf directory from the container to your local directory to persist NiFi flows
       # run command in bind mount folder: docker cp <container-name>:/opt/nifi/nifi-current/conf ${ROOT_FOLDER}\${PROJECT_NAME}\conf
-      - ${ROOT_FOLDER}\${PROJECT_NAME}\conf:/opt/nifi/nifi-current/conf
+      # - ${ROOT_FOLDER}\${PROJECT_NAME}\conf:/opt/nifi/nifi-current/conf
       # folder for user source
       - ${ROOT_FOLDER}\${PROJECT_NAME}\_source:/opt/nifi/nifi-current/source
       # folder for user target
